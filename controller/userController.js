@@ -52,7 +52,7 @@ const [user]=await dbConnection.query("select userName, userid, password from us
 
  const userName=user[0].userName;
  const userid=user[0].userid
-const token=jwt.sign({userName,userid},"secret",{expiresIn:"1d"})
+const token=jwt.sign({userName,userid},process.env.JWT_SECRET,{expiresIn:"1d"})
 return res.status(statusCodes.OK).json({msg:"user login seccesful!",token})
 
 }catch(error){
