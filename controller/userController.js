@@ -25,7 +25,7 @@ try{
 
      const hashedPassword= await bcrypt.hash(password,salt)
 
-await dbConnection.query("INSERT INTO users (userName, firstName, lastname, email, password) VALUES (?,?,?,?,?)",
+await dbConnection.query("INSERT INTO users (userName, firstName, lastName, email, password) VALUES (?,?,?,?,?)",
     [userName, firstName, lastName, email, hashedPassword] )
     return res.status(statusCodes.CREATED).json({msg:"user created"})
 } catch(error){
@@ -43,7 +43,7 @@ if(!email || !password){
 try{
 const [user]=await dbConnection.query("select userName, userid, password from users where email=? ",[email])
  if(user.length==0){
-    return res.status(statusCodes.BAD_REQUEST).json({msg:"invalid credential"})
+    return res.status(statusCodes.BAD_REQUEST).json({msg:"user not found, please register"})
  }
  const isMatch=await bcrypt.compare(password,user[0].password)
  if(!isMatch){
@@ -53,7 +53,7 @@ const [user]=await dbConnection.query("select userName, userid, password from us
  const userName=user[0].userName;
  const userid=user[0].userid
 const token=jwt.sign({userName,userid},process.env.JWT_SECRET,{expiresIn:"1d"})
-return res.status(statusCodes.OK).json({msg:"user login seccesful!",token})
+return res.status(statusCodes.OK).json({msg:"user login seccesful!",token,userName})
 
 }catch(error){
  console.log(error.message)

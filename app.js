@@ -3,6 +3,8 @@ const express=require("express");
 const app=express();
 const port=5500
 const authmiddleware=require("./middleware/authmiddleware")
+const cors=require("cors")
+app.use(cors())
 
 const dbConnection=require("./db/dbConfig")
 app.use(express.json())
