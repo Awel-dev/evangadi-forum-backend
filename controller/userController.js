@@ -62,7 +62,6 @@ return res.status(statusCodes.OK).json({msg:"user login seccesful!",token})
 
 }
 
-
 async function checkUser(req,res){
     const userName=req.user.userName;
     const userid=req.user.userid;

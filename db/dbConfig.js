@@ -10,15 +10,5 @@ const dbConnection=mysql2.createPool(
 
     }
 )
-// console.log(process.env.JWT_SECRET)
-// dbConnection.execute("select 'test' ",(err,result)=>{
-//     if(err){
-//         console.log(err.message)
-//     }
-//     else{
-//    console.log(result)
-//     }
-// })
 
-// console.log("final")
 module.exports=dbConnection.promise();

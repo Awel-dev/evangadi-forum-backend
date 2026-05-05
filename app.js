@@ -13,8 +13,6 @@ app.use("/api/users", userRoute)
 
 const questionRoute=require("./routes/questionRoute")
 app.use("/api/questions",authmiddleware,questionRoute)
-  
-
 
 async function start() {
 try{
