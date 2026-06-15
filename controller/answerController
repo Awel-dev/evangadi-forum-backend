@@ -1,0 +1,50 @@
+const dbConnection=require("../db/dbConfig")
+// const { v4: uuidv4 } = require("uuid");
+
+async function postAnswer(req, res) {
+  try {
+    const { questionId } = req.params;
+    const { answer } = req.body;
+    const userid = req.user.userid;
+    if (!answer) {
+      return res.status(400).json({
+        msg: "Please provide an answer"
+      });
+    }
+    // const answerid = uuidv4();
+    await dbConnection.query(
+      "INSERT INTO answers (questionid, userid, answer) VALUES (?, ?, ?)",
+      [questionId, userid, answer]
+    );
+    res.status(201).json({
+      msg: "Answer posted successfully"
+    });
+  } catch (error) {
+    res.status(500).json({
+      error: error.message
+    });
+    }}
+
+    
+
+    async function getAnswers(req, res) {
+      try {
+        const { questionId } = req.params;
+        const [answers] = await dbConnection.query(
+          "SELECT * FROM answers WHERE questionid = ?",
+          [questionId]
+        );
+        res.status(200).json({
+          answers
+        });
+      } catch (error) {
+        res.status(500).json({
+          error: error.message
+        });
+      }
+    }
+
+    module.exports = {
+      postAnswer,
+      getAnswers
+    };

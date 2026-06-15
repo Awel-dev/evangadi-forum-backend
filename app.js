@@ -16,6 +16,9 @@ app.use("/api/users", userRoute)
 const questionRoute=require("./routes/questionRoute")
 app.use("/api/questions",authmiddleware,questionRoute)
 
+const answerRoute=require("./routes/answerRoute")
+app.use("/api/answers",authmiddleware,answerRoute)
+
 async function start() {
 try{
 const result=await dbConnection.execute("select 'test' ")
