@@ -1,5 +1,4 @@
 const dbConnection=require("../db/dbConfig")
-// const { v4: uuidv4 } = require("uuid");
 
 async function postAnswer(req, res) {
   try {
@@ -11,7 +10,6 @@ async function postAnswer(req, res) {
         msg: "Please provide an answer"
       });
     }
-    // const answerid = uuidv4();
     await dbConnection.query(
       "INSERT INTO answers (questionid, userid, answer) VALUES (?, ?, ?)",
       [questionId, userid, answer]
@@ -25,16 +23,18 @@ async function postAnswer(req, res) {
     });
     }}
 
-    
+
 
     async function getAnswers(req, res) {
       try {
         const { questionId } = req.params;
+        const username= req.user.userName;
         const [answers] = await dbConnection.query(
           "SELECT * FROM answers WHERE questionid = ?",
           [questionId]
         );
         res.status(200).json({
+          username,
           answers
         });
       } catch (error) {
